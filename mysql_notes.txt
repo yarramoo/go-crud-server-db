@@ -1,0 +1,16 @@
+Installed using homebrew
+
+Start server using `mysql.server start`
+Apparently this does not run in the background... or smth
+
+Connect using `mysql -u root`
+
+From the installation output:
+
+We've installed your MySQL database without a root password. To secure it run:
+    mysql_secure_installation
+
+To start mysql now and restart at login:
+  brew services start mysql
+Or, if you don't want/need a background service you can just run:
+  /usr/local/opt/mysql/bin/mysqld_safe --datadir\=/usr/local/var/mysql
