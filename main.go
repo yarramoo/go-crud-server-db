@@ -44,7 +44,6 @@ func main() {
 	sqlDB := MySqlServer{
 		name: "goblog",
 	}
-	
 
 	http.HandleFunc("/", IndexWrapper(&sqlDB));
 	http.HandleFunc("/show", ShowWrapper(&sqlDB));
