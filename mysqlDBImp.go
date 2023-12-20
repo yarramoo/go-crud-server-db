@@ -80,7 +80,6 @@ func (db *MySqlServer) UpdateId(id int, emp Employee) error {
 	return nil;
 }
 
-// 	Insert(*Employee) error;
 func (db *MySqlServer) Insert(emp *Employee) error {
 	dbconn := dbConn(db.name);
 	defer dbconn.Close();
@@ -92,7 +91,6 @@ func (db *MySqlServer) Insert(emp *Employee) error {
 	return nil;
 }
 
-// 	Delete(int) error;
 func (db *MySqlServer) Delete(id int) error {
 	dbconn := dbConn(db.name);
 	defer dbconn.Close();
@@ -104,79 +102,6 @@ func (db *MySqlServer) Delete(id int) error {
 	return nil;
 }
 
-// func Delete(w http.ResponseWriter, r *http.Request) {
-// 	db := dbConn();
-// 	emp := r.URL.Query().Get("id");
-// 	delForm, err := db.Prepare("DELETE FROM Employee WHERE id=?");
-// 	if err != nil {
-// 		panic(err.Error());
-// 	}
-// 	delForm.Exec(emp);
-// 	log.Println("DELETE");
-// 	defer db.Close();
-// 	http.Redirect(w, r, "/", 301);
-// }
-
-// func Insert(w http.ResponseWriter, r *http.Request) {
-// 	db := dbConn();
-// 	if r.Method == "POST" {
-// 		name := r.FormValue("name");
-// 		city := r.FormValue("city");
-// 		insForm, err := db.Prepare("INSERT INTO Employee(name, city) VALUES (?,?)")
-// 		if err != nil {
-// 			panic(err.Error());
-// 		}
-// 		insForm.Exec(name, city);
-// 		log.Println("INSERT: Name: " + name + " | City: " + city);
-// 	}
-// 	defer db.Close();
-// 	http.Redirect(w, r, "/", 301);
-// }
-
-// func Update(w http.ResponseWriter, r *http.Request) {
-// 	db := dbConn();
-// 	if r.Method == "POST" {
-// 		name := r.FormValue("name");
-// 		city := r.FormValue("city");
-// 		id := r.FormValue("uid");
-// 		insForm, err := db.Prepare("UPDATE Employee SET name=?, city=?, WHERE id=?");
-// 		if err != nil {
-// 			panic(err.Error());
-// 		}
-// 		insForm.Exec(name, city, id);
-// 		log.Println("UPDATE: Name: " + name + " | City " + city);
-// 	}
-// 	defer db.Close();
-// 	http.Redirect(w, r, "/", 301);
-// }
-
-// func Show(w http.ResponseWriter, r *http.Request) {
-// 	db := dbConn();
-// 	idStr := r.URL.Query().Get("id");
-// 	id, err := strconv.Atoi(idStr);
-// 	if err != nil {
-// 		panic(err.Error());
-// 	}
-// 	res, err =
-// 	selDB, err := db.Query("SELECT * FROM Employee WHERE id=?", id);
-// 	if err != nil {
-// 		panic(err.Error());
-// 	}
-// 	emp := Employee{}
-// 	for selDB.Next() {
-// 		var id int;
-// 		var name, city string;
-// 		err = selDB.Scan(&id, &name, &city);
-// 		if err != nil {
-// 			panic(err.Error());
-// 		}
-// 		emp.Id = id;
-// 		emp.Name = name;
-// 		emp.City = city;
-// 	}
-// 	tmpl.ExecuteTemplate(w, "Show", emp);
-// 	defer db.Close();
-// }
 const (
 	username = "root"
 	password = ""
@@ -206,31 +131,9 @@ func createDatabase(db *sql.DB, name string) sql.Result {
 	return res;
 }
 
-// func createTableQueryFromStructure(db *sql.DB, name string, data interface{}) string {
-// 	var columns []string;
-// 	t := reflect.TypeOf(data);
-// 	for i := 0; i < t.NumField(); i++ {
-// 		field := t.Field(i);
-// 		columnName := strings.ToLower(field.Name);
-// 		columnType := "";
-// 		switch field.Type.Kind() {
-// 		case reflect.Int:
-// 			columnType = "INT";
-// 		case reflect.String:
-// 			columnType = "VARCHAR(255)"
-// 		default:
-// 			panic("createTableQueryFromStructure: Unsupported structure type");
-// 		}
-// 		columns = append(columns, fmt.Sprintf("%s %s", columnName, columnType));
-// 	}
-// 	createTableQuery := fmt.Sprintf("CREATE TABLE %s (%s);", name, strings.Join(columns, ", "));
-// 	return createTableQuery;
-// }
-
 func createTable(db *sql.DB, name string) sql.Result {
 	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second);
 	defer cancelfunc();
-	// res, err := db.ExecContext(ctx, "CREATE DATABASE IF NOT EXISTS "+name);
 	dropQuery := "DROP TABLE IF EXISTS`"+name+"`;";
 	query := 
 		"CREATE TABLE `"+name+"` (" +
